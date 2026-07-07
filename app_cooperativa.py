@@ -83,7 +83,7 @@ def limpar_telefone(telefone_str):
 # ==========================================
 # 3. INTERFACE DO USUÁRIO (STREAMLIT UI/UX AGTECH)
 # ==========================================
-st.set_page_config(page_title="Credi - Gestão de Crédito", page_icon="🌱", layout="wide")
+st.set_page_config(page_title="Cia Menezes - Gestão de Crédito", page_icon="🌱", layout="wide")
 
 st.markdown("""
     <style>
@@ -189,7 +189,7 @@ else:
 
 st.markdown("""
     <div class="header-banner">
-        <h1>CrediTech</h1>
+        <h1>Cia Menezes</h1>
         <p>Plataforma Inteligente de Gestão de Crédito e Financiamento</p>
     </div>
     """, unsafe_allow_html=True)
@@ -692,7 +692,7 @@ elif menu == "Relatórios":
     st.download_button(
         label="📊 Exportar Relatório de Carteira para Excel",
         data=buffer.getvalue(),
-        file_name=f"Relatorio_Financeiro_Credi.xlsx",
+        file_name=f"Relatorio_Financeiro_Cia_Menezes.xlsx",
         mime="application/vnd.ms-excel",
         type="primary"
     )
