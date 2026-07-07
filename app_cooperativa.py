@@ -83,7 +83,7 @@ def limpar_telefone(telefone_str):
 # ==========================================
 # 3. INTERFACE DO USUÁRIO (STREAMLIT UI/UX AGTECH)
 # ==========================================
-st.set_page_config(page_title="Cia Menezes - Gestão de Crédito", page_icon="🌱", layout="wide")
+st.set_page_config(page_title="Cia Menezes - Gestão de Crédito", page_icon="📊", layout="wide")
 
 st.markdown("""
     <style>
@@ -178,7 +178,7 @@ if not df_alertas.empty:
     qtd_proximos = len(df_alertas[(df_alertas['vencimento_dt'] >= hoje) & (df_alertas['vencimento_dt'] <= limite_5_dias)])
     
     if qtd_atrasados > 0:
-        st.sidebar.error(f"🚨 **{qtd_atrasados}** Produtores em Atraso")
+        st.sidebar.error(f"🚨 **{qtd_atrasados}** Clientes em Atraso")
     else:
         st.sidebar.success("✅ Carteira 100% Adimplente")
         
@@ -341,7 +341,7 @@ if menu == "Dashboard":
 elif menu == "Cadastrar Cliente":
     st.header("🌱 Ficha de Matrícula do Cooperado")
     with st.form("form_cliente"):
-        nome = st.text_input("Nome Completo do Produtor / Razão Social")
+        nome = st.text_input("Nome Completo do Cliente / Razão Social")
         telefone = st.text_input("WhatsApp para Cobrança Automática (Ex: 16991645755)")
         email = st.text_input("E-mail Eletrônico")
         limite = st.number_input("Cota Máxima de Crédito Pré-Aprovado (R$)", min_value=0.0, step=500.0)
@@ -367,7 +367,7 @@ elif menu == "Consultar Clientes":
     if df_clientes.empty:
         st.info("Nenhum cliente cadastrado até o momento.")
     else:
-        st.subheader("🔍 Localizador de Produtores")
+        st.subheader("🔍 Lista de Clientes")
         st.dataframe(df_clientes[['Nome', 'WhatsApp', 'E-mail', 'Limite de Crédito']], use_container_width=True, hide_index=True)
         
         st.write("---")
@@ -460,7 +460,7 @@ elif menu == "Novo Empréstimo":
         df_clientes = pd.read_sql_query("SELECT nome FROM clientes", conn)
     
     if df_clientes.empty:
-        st.warning("Efetue o cadastro de um produtor antes de emitir crédito.")
+        st.warning("Efetue o cadastro de um cliente antes de emitir crédito.")
     else:
         with st.form("form_emprestimo"):
             cliente = st.selectbox("Selecione o Beneficiário", df_clientes['nome'].tolist())
@@ -469,7 +469,7 @@ elif menu == "Novo Empréstimo":
             qtd_parcelas = st.number_input("Número de Parcelas Finais", min_value=1, value=2)
             primeiro_vencimento = st.date_input("Vencimento do Primeiro Bloco")
             
-            submit_emp = st.form_submit_button("Gerar Plano de Amortização Fixo")
+            submit_emp = st.form_submit_button("Gerar Plano Fixo")
             
             if submit_emp and valor_total_solicitado > 0:
                 emp_id = f"EMP_{datetime.now().strftime('%Y%m%d%H%M%S')}"
@@ -599,7 +599,7 @@ elif menu == "Recebimentos e Baixas":
                             msg_wsp = f"Olá {row_selecionada['cliente_nome']}, lembrete da sua parcela {row_selecionada['n_parcela']} no valor de R$ {valor_requerido:.2f} com vencimento em {venc_pt_sel}."
                             texto_codificado = urllib.parse.quote(msg_wsp)
                             link_final = f"https://wa.me/55{row_selecionada['telefone']}?text={texto_codificado}"
-                            st.markdown(f'<a href="{link_final}" target="_blank" class="wa-button">💬 Notificar Produtor via WhatsApp</a>', unsafe_allow_html=True)
+                            st.markdown(f'<a href="{link_final}" target="_blank" class="wa-button">💬 Notificar Cliente via WhatsApp</a>', unsafe_allow_html=True)
                         
                         if dif > 0.01:
                             if not contrato_valido:
